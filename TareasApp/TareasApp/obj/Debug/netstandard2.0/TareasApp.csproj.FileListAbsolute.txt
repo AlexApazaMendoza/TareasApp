@@ -1,0 +1,15 @@
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\bin\Debug\netstandard2.0\TareasApp.deps.json
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\bin\Debug\netstandard2.0\TareasApp.dll
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\bin\Debug\netstandard2.0\TareasApp.pdb
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\TareasApp.csproj.AssemblyReference.cache
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\TareasApp.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\App.xaml.g.cs
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\TareasApp.AssemblyInfoInputs.cache
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\TareasApp.AssemblyInfo.cs
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\TareasApp.csproj.CoreCompileInputs.cache
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\XamlC.stamp
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\TareasApp.dll
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\refint\TareasApp.dll
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\TareasApp.pdb
+D:\Documentos\Visual Studio Projects\TareasApp\TareasApp\TareasApp\obj\Debug\netstandard2.0\ref\TareasApp.dll

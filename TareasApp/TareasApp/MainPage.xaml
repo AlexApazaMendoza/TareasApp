@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="TareasApp.MainPage">
+
+    <StackLayout>
+        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+            <Label Text="Registro de Tareas" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        </Frame>
+
+        <StackLayout BackgroundColor="DodgerBlue"
+                     Padding="10">
+            <Entry x:Name="IdEntry"
+                   TextColor="White"
+                   Text="{Binding Id}"
+                   FontAttributes="Bold"
+                   IsEnabled="False"/>
+            <Entry x:Name="TituloEntry" 
+                   Placeholder="Ingrese el titulo"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   Text="{Binding Titulo}"/>
+            <Entry x:Name="FechaHoraEntry" 
+                   Placeholder="Ingrese la fecha y hora"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   Text="{Binding FechaHora}"
+                   IsEnabled="False"/>
+            <StackLayout Orientation="Horizontal" 
+                         HorizontalOptions="Center">
+                <DatePicker TextColor="White" 
+                            FontAttributes="Bold"
+                            Date="{Binding Fecha}"
+                            MinimumDate="{Binding FechaActual}">
+                    <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+                </DatePicker>
+                <TimePicker TextColor="White" 
+                            FontAttributes="Bold"
+                            Time="{Binding Hora}">
+                </TimePicker>
+            </StackLayout>
+            <Entry x:Name="Prioridad" 
+                   Placeholder="Ingrese la prioridad"
+                   TextColor="White"
+                   Keyboard="Numeric"
+                   FontAttributes="Bold"
+                   Text="{Binding Prioridad}"/>
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         Padding="10">
+                <Button Text="Registrar" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" Command="{Binding InsertarTareaAsyncCommand}"/>
+                <Button Text="Actualizar" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" Command="{Binding ActualizarTareaAsyncCommand}"/>
+                <Button Text="Eliminar" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" Command="{Binding EliminarTareaAsyncCommand}"/>
+            </StackLayout>
+            <Button Text="Limpiar" FontAttributes="Bold" HorizontalOptions="Center" BackgroundColor="White" TextColor="Black" Command="{Binding LimpiarCommand}"/>
+
+        </StackLayout>
+        <ListView x:Name="LvTareas" 
+                  ItemsSource="{Binding Tareas}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Titulo}"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+                            <Label Text="{Binding FechaHora}"
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+                            <Label Text="{Binding Prioridad}"
+                                   Grid.Row="0"
+                                   Grid.Column="2"
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

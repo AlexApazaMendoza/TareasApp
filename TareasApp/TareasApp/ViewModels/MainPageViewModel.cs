@@ -14,22 +14,18 @@ namespace TareasApp.ViewModels
         private string _Id;
         private string _Titulo;
         private string _FechaHora;
-        private DateTime _Fecha;
         private string _Prioridad;
-        private string _FechaActual;
-
+        private DateTime _Fecha;
         private TimeSpan _Hora;
 
         private List<Tarea> _Tareas;
-
-
         #endregion
 
         #region Constructor
         public MainPageViewModel(INavigation navigation)
         {
             Navigation = navigation;    //comportamiento de Navigation
-            FechaActual = DateTime.Now.ToString("dd/MM/yyyy");
+            Fecha = DateTime.Now;
             MostrarTareas();
         }
         #endregion
@@ -69,12 +65,6 @@ namespace TareasApp.ViewModels
                 FechaHora = Fecha.ToString("dd/MM/yyyy") + " " + Hora.ToString();
             }
         }
-
-        public string FechaActual
-        {
-            get { return _FechaActual; }
-            set { SetValue(ref _FechaActual, value); }
-        }
         public string Prioridad
         {
             get { return _Prioridad; }
@@ -90,25 +80,31 @@ namespace TareasApp.ViewModels
         #region Procesos
         public async Task InsertarTarea()
         {
-            if ( (Prioridad == "" || (Prioridad == null)) || (FechaHora == "" || (FechaHora == null)) || ((Titulo == "") || (Titulo==null)) )
+            if (String.IsNullOrEmpty(Id))
             {
-                await DisplayAlert("Advertencia", "Complete todos los datos", "Ok");
+                if (String.IsNullOrEmpty(Titulo) || 
+                    String.IsNullOrEmpty(FechaHora) ||
+                    String.IsNullOrEmpty(Prioridad))
+                {
+                    await DisplayAlert("Advertencia", "Complete todos los datos", "Ok");
+                }
+                else
+                {
+                    Tarea tarea = new Tarea
+                    {
+                        Titulo = Titulo,
+                        FechaHora = FechaHora,
+                        Prioridad = Prioridad
+                    };
+                    await App.SQLiteDB.SaveTarea(tarea);
+                    await MostrarTareas();
+                    Limpiar();
+                }
             }
             else
             {
-                Tarea tarea = new Tarea
-                {
-                    Titulo = Titulo,
-                    FechaHora = FechaHora,
-                    Prioridad = Prioridad
-                };
-                Titulo = "";
-                FechaHora = "";
-                Prioridad = "";
-                await App.SQLiteDB.SaveTarea(tarea);
-                await MostrarTareas();
+                await DisplayAlert("Advertencia", "Debe limpiar el formulario antes de ingresar una nueva tarea", "Ok");
             }
-
         }
         public async Task MostrarTareas()
         {
@@ -119,62 +115,75 @@ namespace TareasApp.ViewModels
                 Tareas = tareas;
             }
         }
-
         public async Task EliminarTarea()
         {
-            Tarea tarea = new Tarea
-            {
-                Id = Convert.ToInt32(Id),
-                Titulo = Titulo,
-                FechaHora = FechaHora,
-                Prioridad = Prioridad
-            };
-            Id = "";
-            Titulo = "";
-            FechaHora = "";
-            Prioridad = "";
-            if (tarea.Id != 0)
-            {
-                await App.SQLiteDB.DeleteTarea(tarea);
-                await DisplayAlert("Advertencia", "Se eliminó la tarea correctamente", "Ok");
-                await MostrarTareas();
-            }
-            else
-            {
-                await DisplayAlert("Advertencia", "Debe seleccionar la tarea a eliminar.", "Ok");
-            }
-        }
-
-        public async Task ActualizarTarea()
-        {
-            Tarea tarea = new Tarea
-            {
-                Id = Convert.ToInt32(Id),
-                Titulo = Titulo,
-                FechaHora = FechaHora,
-                Prioridad = Prioridad
-            };
-            Id = "";
-            Titulo = "";
-            FechaHora = "";
-            Prioridad = "";
-            if (tarea.Id != 0)
-            {
-                await App.SQLiteDB.UpdateTarea(tarea);
-                await DisplayAlert("Advertencia", "Se actualizó la tarea correctamente", "Ok");
-                await MostrarTareas();
-            }
-            else
+            if (String.IsNullOrEmpty(Id))
             {
                 await DisplayAlert("Advertencia", "Debe seleccionar la tarea a actualizar.", "Ok");
+            }
+            else
+            {
+                Tarea tarea = new Tarea
+                {
+                    Id = Convert.ToInt32(Id),
+                    Titulo = Titulo,
+                    FechaHora = FechaHora,
+                    Prioridad = Prioridad
+                };
+                if (tarea.Id != 0)
+                {
+                    await App.SQLiteDB.DeleteTarea(tarea);
+                    await DisplayAlert("Advertencia", "Se eliminó la tarea correctamente", "Ok");
+                    await MostrarTareas();
+                }
+                else
+                {
+                    await DisplayAlert("Advertencia", "No se pudo eliminar la tarea.", "Ok");
+                }
+                Limpiar();
+            }
+        }
+        public async Task ActualizarTarea()
+        {
+            if (String.IsNullOrEmpty(Id))
+            {
+                await DisplayAlert("Advertencia", "Debe seleccionar la tarea a actualizar.", "Ok");
+            }
+            else
+            {
+                Tarea tarea = new Tarea
+                {
+                    Id = Convert.ToInt32(Id),
+                    Titulo = Titulo,
+                    FechaHora = FechaHora,
+                    Prioridad = Prioridad
+                };
+                if (tarea.Id != 0)
+                {
+                    await App.SQLiteDB.UpdateTarea(tarea);
+                    await DisplayAlert("Advertencia", "Se actualizó la tarea correctamente", "Ok");
+                    await MostrarTareas();
+                }
+                else
+                {
+                    await DisplayAlert("Advertencia", "No se pudo actualizar la tarea", "Ok");
+                }
+                Limpiar();
             }
         }
         public void Limpiar()
         {
-            Id = "";
-            Titulo = "";
-            FechaHora = "";
-            Prioridad = "";
+            Id = String.Empty;
+            Titulo = String.Empty;
+            FechaHora = String.Empty;
+            Prioridad = String.Empty;
+        }
+        public void SeleccionTarea(Tarea tarea)
+        {
+            Id = tarea.Id.ToString();
+            Titulo = tarea.Titulo;
+            FechaHora = tarea.FechaHora;
+            Prioridad = tarea.Prioridad;
         }
         #endregion
 
@@ -183,6 +192,7 @@ namespace TareasApp.ViewModels
         public ICommand EliminarTareaAsyncCommand => new Command(async () => await EliminarTarea());
         public ICommand ActualizarTareaAsyncCommand => new Command(async () => await ActualizarTarea());
         public ICommand LimpiarCommand => new Command(Limpiar);
+        public ICommand SeleccionTareaCommand => new Command<Tarea>(SeleccionTarea);
         #endregion
     }
 }
